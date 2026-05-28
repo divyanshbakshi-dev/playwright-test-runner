@@ -3,7 +3,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// Install Chromium on startup if not already installed
+// Install Chromium on startup
 try {
   console.log('Installing Chromium...');
   execSync('npx playwright install chromium --with-deps', {
@@ -42,8 +42,16 @@ app.post('/run-test', (req, res) => {
     fs.writeFileSync(testFile, testCode);
 
     const output = execSync(
-      `npx playwright test ${testFile} --config=app/playwright.config.js --ignore-snapshots`,
-      { timeout: 60000, encoding: 'utf-8' }
+      `npx playwright test ${testFile} --reporter=json`,
+      {
+        timeout: 60000,
+        encoding: 'utf-8',
+        cwd: '/app',
+        env: {
+          ...process.env,
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
+        }
+      }
     );
 
     const result = JSON.parse(output);
