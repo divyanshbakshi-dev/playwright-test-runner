@@ -3,6 +3,18 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+// Install Chromium on startup if not already installed
+try {
+  console.log('Installing Chromium...');
+  execSync('npx playwright install chromium --with-deps', {
+    stdio: 'inherit',
+    timeout: 120000
+  });
+  console.log('Chromium installed successfully');
+} catch (e) {
+  console.error('Chromium install failed:', e.message);
+}
+
 const app = express();
 app.use(express.json());
 
@@ -58,7 +70,8 @@ app.post('/run-test', (req, res) => {
       passed,
       failed,
       summary: parsedResult ? `${passed} passed, ${failed} failed` : 'Execution error',
-      error: parsedResult ? undefined : rawOutput.slice(0, 500),
+      error: rawOutput.slice(0, 2000),
+      stderr: err.stderr?.slice(0, 2000) || null,
     });
 
   } finally {
