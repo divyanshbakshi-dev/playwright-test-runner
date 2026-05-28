@@ -1,0 +1,1 @@
+const { defineConfig } = require('@playwright/test'); module.exports = defineConfig({ timeout: 30000, use: { headless: true, launchOptions: { args: ['--no-sandbox', '--disable-setuid-sandbox'] } }, });
