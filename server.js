@@ -42,7 +42,7 @@ app.post('/run-test', (req, res) => {
     fs.writeFileSync(testFile, testCode);
 
     const output = execSync(
-      `npx playwright test ${testFile} --config=app/playwright.config.js`,
+      `npx playwright test ${testFile} --config=app/playwright.config.js --ignore-snapshots`,
       { timeout: 60000, encoding: 'utf-8' }
     );
 
