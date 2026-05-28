@@ -49,7 +49,8 @@ app.post('/run-test', (req, res) => {
         cwd: '/app',
         env: {
           ...process.env,
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0',
+	  NODE_PATH: '/app/node_modules'
         }
       }
     );
