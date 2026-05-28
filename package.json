@@ -1,11 +1,12 @@
-{ "name": "playwright-test-runner", 
-  "version": "1.0.0", 
-  "scripts":{
+{
+  "name": "playwright-test-runner",
+  "version": "1.0.0",
+  "scripts": {
     "start": "node server.js",
-    "build": "npx playwright install chromium"
-  }, 
-  "dependencies": { 
+    "postinstall": "npx playwright install chromium --with-deps"
+  },
+  "dependencies": {
     "express": "^4.18.2",
-    "@playwright/test": "^1.44.0" 
+    "@playwright/test": "^1.44.0"
   }
 }
